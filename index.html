@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KPRS — Power & Distribution Transformers</title>
+  <meta name="description" content="KPRS designs and builds power, distribution and special-duty transformers. Wound, tested and certified in-house." />
+  <meta name="theme-color" content="#0d0c0a" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..800&family=Instrument+Serif:ital@0;1&family=Martian+Mono:wght@300..500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/src/styles.css" />
+  <script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+
+<!-- ───────────── Title-block navigation ───────────── -->
+<header class="tb" data-tb>
+  <a class="tb__mark" href="#top" aria-label="KPRS — home">
+    <span class="tb__kprs">KPRS</span>
+    <span class="tb__sub">Transformers</span>
+  </a>
+  <div class="tb__sheet" aria-live="polite">
+    <span class="tb__label">SHT</span>
+    <span class="tb__num" data-sheet-num>01</span>
+    <span class="tb__slash">/07</span>
+    <span class="tb__title" data-sheet-title>Reveal</span>
+  </div>
+  <nav class="tb__actions">
+    <button class="tb__index" data-index-open aria-expanded="false" aria-controls="register">
+      <span class="tb__bars" aria-hidden="true"><i></i><i></i></span>Index
+    </button>
+    <a class="tb__enquire" href="#enquire">Request a specification</a>
+  </nav>
+</header>
+
+<!-- Vertical scale gauge (desktop) -->
+<div class="gauge" aria-hidden="true">
+  <div class="gauge__ticks" data-gauge-ticks></div>
+  <div class="gauge__needle" data-gauge-needle></div>
+  <span class="gauge__read" data-gauge-read>000</span>
+</div>
+
+<!-- Drawing register (index overlay) -->
+<div class="register" id="register" data-register aria-hidden="true">
+  <div class="register__inner">
+    <div class="register__head">
+      <span>Drawing register</span><span>KPRS / WEB / REV C</span>
+      <button class="register__close" data-index-close>Close</button>
+    </div>
+    <table class="register__table">
+      <thead><tr><th>Sht</th><th>Title</th><th>Content</th><th>Rev</th></tr></thead>
+      <tbody>
+        <tr><td>01</td><td><a href="#top">Reveal</a></td><td>The machine</td><td>C</td></tr>
+        <tr><td>02</td><td><a href="#winding">Winding</a></td><td>On method</td><td>C</td></tr>
+        <tr><td>03</td><td><a href="#anatomy">Anatomy</a></td><td>Section through a power transformer</td><td>C</td></tr>
+        <tr><td>04</td><td><a href="#range">Range</a></td><td>Five product families</td><td>C</td></tr>
+        <tr><td>05</td><td><a href="#record">Test record</a></td><td>What leaves the works</td><td>C</td></tr>
+        <tr><td>06</td><td><a href="#sectors">Sectors</a></td><td>Where the load is</td><td>C</td></tr>
+        <tr><td>07</td><td><a href="#enquire">Enquire</a></td><td>Title block</td><td>C</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<main>
+
+<!-- ───────────── SHT 01 · Cinematic reveal ───────────── -->
+<section class="hero" id="top" data-sheet="01" data-sheet-title="Reveal" data-tone="dark">
+  <canvas class="hero__canvas" data-hero-canvas aria-hidden="true"></canvas>
+  <div class="hero__veil" aria-hidden="true"></div>
+
+  <div class="hero__frame" aria-hidden="true">
+    <span class="crop crop--tl"></span><span class="crop crop--tr"></span>
+    <span class="crop crop--bl"></span><span class="crop crop--br"></span>
+  </div>
+
+  <!-- leader-line annotations, positioned from 3D anchors -->
+  <svg class="hero__leaders" data-hero-leaders aria-hidden="true"></svg>
+  <ul class="hero__notes" aria-hidden="true">
+    <li data-anchor="bushing"><b>A</b>HV bushing<em>Condenser type · 145 kV BIL 650</em></li>
+    <li data-anchor="conservator"><b>B</b>Conservator<em>Atmoseal bag · Buchholz relay</em></li>
+    <li data-anchor="radiator"><b>C</b>Radiator bank<em>ONAN / ONAF · 520 mm pressed fins</em></li>
+  </ul>
+
+  <div class="hero__copy">
+    <p class="hero__eyebrow"><span>Power</span><span>·</span><span>Distribution</span><span>·</span><span>Special duty</span></p>
+    <h1 class="hero__title">
+      <span class="line"><span>Power, held</span></span>
+      <span class="line"><span><em>in precise</em></span></span>
+      <span class="line"><span>tension.</span></span>
+    </h1>
+  </div>
+
+  <div class="hero__meta">
+    <dl>
+      <div><dt>Rating</dt><dd data-hero-count="63" data-suffix=" MVA">63 MVA</dd></div>
+      <div><dt>Voltage class</dt><dd data-hero-count="132" data-suffix=" kV">132 kV</dd></div>
+      <div><dt>Cooling</dt><dd>ONAN / ONAF</dd></div>
+    </dl>
+    <p class="hero__scroll"><span class="hero__scroll-line"></span>Scroll to open the tank</p>
+  </div>
+</section>
+
+<!-- ───────────── SHT 02 · Winding / manifesto ───────────── -->
+<section class="winding" id="winding" data-sheet="02" data-sheet-title="Winding" data-tone="dark">
+  <div class="winding__coil" aria-hidden="true">
+    <div class="winding__former">
+      <div class="winding__turns" data-turns></div>
+    </div>
+    <div class="winding__counter">
+      <span>Turn</span><strong data-turn-count>0000</strong><span>/ 1 184</span>
+    </div>
+  </div>
+
+  <div class="winding__text">
+    <p class="kicker">§ 02 — On method</p>
+    <p class="winding__statement" data-scrub-words>
+      A transformer is not assembled. It is wound — one turn of conductor at a time, under controlled tension, around a core cut to a hundredth of a millimetre. Every decision afterwards, from the oil to the radiators to the final test, exists to protect what was wound.
+    </p>
+    <div class="winding__aside">
+      <p>We design, wind, dry, tank and test under one roof. Nothing that carries current is subcontracted.</p>
+      <p class="mono">CRGO M4 core · Paper-insulated copper · Vapour-phase drying</p>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────── SHT 03 · Scroll-controlled anatomy ───────────── -->
+<section class="anatomy" id="anatomy" data-sheet="03" data-sheet-title="Anatomy" data-tone="paper">
+  <div class="anatomy__pin" data-anatomy-pin>
+    <div class="anatomy__grid" aria-hidden="true"></div>
+    <canvas class="anatomy__canvas" data-anatomy-canvas aria-hidden="true"></canvas>
+    <svg class="anatomy__leaders" data-anatomy-leaders aria-hidden="true"></svg>
+
+    <header class="anatomy__head">
+      <p class="kicker">§ 03 — Section through a 63 MVA unit</p>
+      <h2 class="anatomy__title">Anatomy of<br><em>a power transformer</em></h2>
+    </header>
+
+    <ol class="anatomy__steps" data-anatomy-steps>
+      <li class="is-active">
+        <span class="anatomy__no">03.1</span>
+        <h3>Tank &amp; cooling</h3>
+        <p>A welded mild-steel tank, shot-blasted and epoxy-coated, carries the oil that insulates and cools. Detachable radiator banks shed the heat by natural convection, with fans for forced-air rating.</p>
+        <span class="anatomy__label" data-label-anchor="tank">Tank wall — 10 mm, stiffened</span>
+      </li>
+      <li>
+        <span class="anatomy__no">03.2</span>
+        <h3>Cover &amp; bushings</h3>
+        <p>The cover carries the bushings that bring the windings out through the tank, the conservator that lets the oil breathe, and the protection — Buchholz, pressure relief, winding temperature.</p>
+        <span class="anatomy__label" data-label-anchor="cover">Cover assembly lifted</span>
+      </li>
+      <li>
+        <span class="anatomy__no">03.3</span>
+        <h3>Core</h3>
+        <p>Three limbs of cold-rolled grain-oriented steel, stacked in a step-lap pattern with mitred joints. The stepped section fills the circle; the step-lap keeps no-load loss and noise down.</p>
+        <span class="anatomy__label" data-label-anchor="core">CRGO, step-lap, 7 steps</span>
+      </li>
+      <li>
+        <span class="anatomy__no">03.4</span>
+        <h3>Windings</h3>
+        <p>Low-voltage winding nearest the core, high-voltage outside, separated by pressboard barriers and oil ducts. Copper conductor, paper-insulated, clamped and pre-shrunk before it ever sees the tank.</p>
+        <span class="anatomy__label" data-label-anchor="winding">HV disc winding — Cu, PICC</span>
+      </li>
+      <li>
+        <span class="anatomy__no">03.5</span>
+        <h3>Reassembled</h3>
+        <p>Active part dried under vacuum, lowered into the tank, filled with degassed oil and held for impregnation. Then the test bay — and nothing ships without its record.</p>
+        <span class="anatomy__label" data-label-anchor="tank">Ready for routine test</span>
+      </li>
+    </ol>
+
+    <div class="anatomy__scale" aria-hidden="true">
+      <div class="anatomy__scale-bar"><span data-anatomy-progress></span></div>
+      <div class="anatomy__scale-marks">
+        <span>03.1</span><span>03.2</span><span>03.3</span><span>03.4</span><span>03.5</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────── SHT 04 · Product exhibition ───────────── -->
+<section class="range" id="range" data-sheet="04" data-sheet-title="Range" data-tone="graphite">
+  <div class="range__pin" data-range-pin>
+    <div class="range__track" data-range-track>
+
+      <div class="range__intro">
+        <p class="kicker">§ 04 — The range</p>
+        <h2 class="range__title">Five families.<br><em>One works.</em></h2>
+        <p class="range__lede">Each drawn, wound and tested by the same hands. Elevations shown to scale within each plate.</p>
+        <p class="range__hint mono">Scroll → plates I–V</p>
+      </div>
+
+      <article class="plate" data-plate="distribution">
+        <div class="plate__num">I</div>
+        <figure class="plate__drawing" data-drawing="distribution"></figure>
+        <div class="plate__body">
+          <h3 class="plate__name">Distribution<br><em>transformers</em></h3>
+          <p>Oil-immersed, hermetically sealed or conservator type. The workhorse of every feeder.</p>
+          <table class="spec">
+            <tr><th>Rating</th><td>25 – 2 500 kVA</td></tr>
+            <tr><th>Primary</th><td>11 / 22 / 33 kV</td></tr>
+            <tr><th>Losses</th><td>BEE Level 1–3</td></tr>
+            <tr><th>Cooling</th><td>ONAN</td></tr>
+          </table>
+        </div>
+      </article>
+
+      <article class="plate" data-plate="power">
+        <div class="plate__num">II</div>
+        <figure class="plate__drawing" data-drawing="power"></figure>
+        <div class="plate__body">
+          <h3 class="plate__name">Power<br><em>transformers</em></h3>
+          <p>Substation units with on-load tap changers, built to utility specification and witnessed test.</p>
+          <table class="spec">
+            <tr><th>Rating</th><td>5 – 63 MVA</td></tr>
+            <tr><th>Voltage</th><td>up to 132 kV</td></tr>
+            <tr><th>Tap change</th><td>OLTC ±10 %</td></tr>
+            <tr><th>Cooling</th><td>ONAN / ONAF</td></tr>
+          </table>
+        </div>
+      </article>
+
+      <article class="plate" data-plate="dry">
+        <div class="plate__num">III</div>
+        <figure class="plate__drawing" data-drawing="dry"></figure>
+        <div class="plate__body">
+          <h3 class="plate__name">Cast-resin<br><em>dry type</em></h3>
+          <p>No oil, no fire load. For buildings, hospitals, tunnels and data halls where the transformer lives indoors.</p>
+          <table class="spec">
+            <tr><th>Rating</th><td>100 – 5 000 kVA</td></tr>
+            <tr><th>Voltage</th><td>up to 33 kV</td></tr>
+            <tr><th>Class</th><td>F / H insulation</td></tr>
+            <tr><th>Cooling</th><td>AN / AF</td></tr>
+          </table>
+        </div>
+      </article>
+
+      <article class="plate" data-plate="furnace">
+        <div class="plate__num">IV</div>
+        <figure class="plate__drawing" data-drawing="furnace"></figure>
+        <div class="plate__body">
+          <h3 class="plate__name">Furnace &amp;<br><em>rectifier duty</em></h3>
+          <p>High-current secondaries for induction and arc furnaces, electrolysis and traction rectifiers.</p>
+          <table class="spec">
+            <tr><th>Secondary</th><td>to 60 kA</td></tr>
+            <tr><th>Pulse</th><td>6 / 12 / 24</td></tr>
+            <tr><th>Cooling</th><td>OFWF</td></tr>
+            <tr><th>Duty</th><td>Cyclic, harmonic</td></tr>
+          </table>
+        </div>
+      </article>
+
+      <article class="plate" data-plate="solar">
+        <div class="plate__num">V</div>
+        <figure class="plate__drawing" data-drawing="solar"></figure>
+        <div class="plate__body">
+          <h3 class="plate__name">Inverter-duty<br><em>&amp; renewables</em></h3>
+          <p>Multi-winding step-up units for solar and wind plants, rated for inverter harmonics and daily cycling.</p>
+          <table class="spec">
+            <tr><th>Rating</th><td>1 – 12.5 MVA</td></tr>
+            <tr><th>Windings</th><td>Duplex / triple LV</td></tr>
+            <tr><th>Screen</th><td>Electrostatic</td></tr>
+            <tr><th>Cooling</th><td>ONAN / ONAF</td></tr>
+          </table>
+        </div>
+      </article>
+
+      <div class="range__end">
+        <p class="mono">Not in the range?</p>
+        <p class="range__end-line">Special ratings are drawn to order. <a href="#enquire">Send us the duty.</a></p>
+      </div>
+    </div>
+
+    <div class="range__rail" aria-hidden="true">
+      <span>PLATE</span><span class="range__rail-num" data-plate-num>—</span>
+      <div class="range__rail-bar"><span data-range-progress></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────── SHT 05 · Test record ───────────── -->
+<section class="record" id="record" data-sheet="05" data-sheet-title="Test record" data-tone="paper">
+  <div class="record__head">
+    <p class="kicker">§ 05 — Routine &amp; type tests</p>
+    <h2 class="record__title">Nothing leaves<br>the works <em>untested.</em></h2>
+    <p class="record__lede">Every unit carries a signed record. This is the shape of one — a 20 MVA, 66/11 kV unit, abridged.</p>
+  </div>
+
+  <div class="record__sheet">
+    <div class="record__sheet-head mono">
+      <span>Test certificate</span><span>Unit S/N 24-0618</span><span>IS 2026 / IEC 60076</span>
+    </div>
+    <table class="record__table">
+      <thead><tr><th>No.</th><th>Test</th><th>Guaranteed</th><th>Measured</th><th>Result</th></tr></thead>
+      <tbody>
+        <tr><td>5.01</td><td>Winding resistance, HV (75 °C)</td><td>—</td><td><span data-count="0.4218" data-dec="4">0.4218</span> Ω</td><td>Pass</td></tr>
+        <tr><td>5.02</td><td>Voltage ratio, principal tap</td><td>6.000 ± 0.5 %</td><td><span data-count="6.004" data-dec="3">6.004</span></td><td>Pass</td></tr>
+        <tr><td>5.03</td><td>No-load loss at rated voltage</td><td>≤ 14.0 kW</td><td><span data-count="12.86" data-dec="2">12.86</span> kW</td><td>Pass</td></tr>
+        <tr><td>5.04</td><td>Load loss at rated current, 75 °C</td><td>≤ 96.0 kW</td><td><span data-count="91.42" data-dec="2">91.42</span> kW</td><td>Pass</td></tr>
+        <tr><td>5.05</td><td>Impedance voltage</td><td>10.0 % ± 10 %</td><td><span data-count="10.12" data-dec="2">10.12</span> %</td><td>Pass</td></tr>
+        <tr><td>5.06</td><td>Separate-source AC withstand, HV</td><td>140 kV / 60 s</td><td><span data-count="140" data-dec="0">140</span> kV</td><td>Withstood</td></tr>
+        <tr><td>5.07</td><td>Induced over-voltage withstand</td><td>2 × U<sub>r</sub>, 120 Hz</td><td><span data-count="132" data-dec="0">132</span> kV</td><td>Withstood</td></tr>
+        <tr><td>5.08</td><td>Insulation resistance, HV–E, 60 s</td><td>—</td><td><span data-count="18.6" data-dec="1">18.6</span> GΩ</td><td>Pass</td></tr>
+        <tr><td>5.09</td><td>Temperature rise, top oil</td><td>≤ 50 K</td><td><span data-count="43.7" data-dec="1">43.7</span> K</td><td>Pass</td></tr>
+      </tbody>
+    </table>
+    <div class="record__sign">
+      <div><span class="mono">Tested by</span><span class="record__sig">Test bay 2</span></div>
+      <div><span class="mono">Witnessed</span><span class="record__sig">Client inspector</span></div>
+      <div class="record__stamp" aria-hidden="true"><span>KPRS</span><span>Passed</span><span>QA</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────── SHT 06 · Sectors ───────────── -->
+<section class="sectors" id="sectors" data-sheet="06" data-sheet-title="Sectors" data-tone="dark">
+  <div class="sectors__head">
+    <p class="kicker">§ 06 — Where the load is</p>
+    <p class="sectors__lede">Transformers sit at the point where generation becomes use. Ours sit at these.</p>
+  </div>
+  <ol class="sectors__list">
+    <li><span class="sectors__no">06.1</span><span class="sectors__name">State utilities</span><span class="sectors__note">Sub-transmission &amp; distribution networks</span></li>
+    <li><span class="sectors__no">06.2</span><span class="sectors__name">Solar &amp; wind</span><span class="sectors__note">Inverter-duty step-up, pooling stations</span></li>
+    <li><span class="sectors__no">06.3</span><span class="sectors__name">Steel &amp; metals</span><span class="sectors__note">Induction &amp; arc furnace supply</span></li>
+    <li><span class="sectors__no">06.4</span><span class="sectors__name">Rail &amp; metro</span><span class="sectors__note">Traction &amp; auxiliary supply</span></li>
+    <li><span class="sectors__no">06.5</span><span class="sectors__name">Data centres</span><span class="sectors__note">Indoor cast-resin, N+1 substations</span></li>
+    <li><span class="sectors__no">06.6</span><span class="sectors__name">Process industry</span><span class="sectors__note">Cement, chemicals, water</span></li>
+  </ol>
+</section>
+
+</main>
+
+<!-- ───────────── SHT 07 · Title block footer ───────────── -->
+<footer class="enquire" id="enquire" data-sheet="07" data-sheet-title="Enquire" data-tone="paper">
+  <div class="enquire__top">
+    <p class="kicker">§ 07 — Enquire</p>
+    <h2 class="enquire__title"><span>Send us</span> <em>the duty.</em></h2>
+    <p class="enquire__lede">Rating, voltage ratio, vector group, site conditions — or simply the problem. An engineer replies, not a salesperson.</p>
+    <a class="enquire__cta" href="mailto:enquiries@kprs.example">
+      <span>enquiries@kprs.example</span>
+      <svg viewBox="0 0 40 12" aria-hidden="true"><path d="M0 6h38M32 1l6 5-6 5" fill="none" stroke="currentColor" stroke-width="1"/></svg>
+    </a>
+  </div>
+
+  <div class="titleblock">
+    <div class="titleblock__cell titleblock__cell--logo">
+      <span class="titleblock__k">KPRS</span>
+      <span class="mono">Transformers &amp; electrical engineering</span>
+    </div>
+    <div class="titleblock__cell"><span class="mono">Works</span><p>Plot —, Industrial Estate<br>City, State, India</p></div>
+    <div class="titleblock__cell"><span class="mono">Telephone</span><p><a href="tel:+910000000000">+91 00000 00000</a></p></div>
+    <div class="titleblock__cell"><span class="mono">Standards</span><p>IS 2026 · IS 1180<br>IEC 60076</p></div>
+    <div class="titleblock__cell"><span class="mono">Sheets</span><p><a href="#anatomy">Anatomy</a> · <a href="#range">Range</a><br><a href="#record">Test record</a></p></div>
+    <div class="titleblock__cell titleblock__cell--small"><span class="mono">Scale</span><p>1 : 1</p></div>
+    <div class="titleblock__cell titleblock__cell--small"><span class="mono">Rev</span><p>C</p></div>
+    <div class="titleblock__cell titleblock__cell--small"><span class="mono">Sheet</span><p>07 / 07</p></div>
+    <div class="titleblock__cell titleblock__cell--wide"><span class="mono">©</span><p>KPRS <span data-year>2026</span>. All dimensions in millimetres unless stated.</p></div>
+  </div>
+</footer>
+
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
