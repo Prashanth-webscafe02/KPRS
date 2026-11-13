@@ -77,13 +77,55 @@ export function initRange(section: HTMLElement, { reduced }: MotionOptions) {
     };
   });
 
+  // Phones: the plates become a swipeable, snapping row (CSS scroll-snap on the
+  // track). Each drawing plots itself the first time its plate is swiped into
+  // view; the rail shows which plate is in front and how far through the range.
   mm.add('(max-width: 860px)', () => {
-    plates.forEach(plate => {
-      const tl = gsap.timeline({ scrollTrigger: { trigger: plate, start: 'top 70%', once: true } });
+    const tls = plates.map(plate => {
+      const tl = gsap.timeline({ paused: true });
       tl.fromTo(strokes(plate), { strokeDasharray: 1, strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 2.2, ease: 'power2.inOut', stagger: { each: .006, from: 'end' } })
         .fromTo(quiet(plate), { opacity: 0 }, { opacity: 1, duration: .6 }, 1.4)
         .fromTo(plate.querySelector('.plate__name'), { clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0% 0 0)', duration: 1.1, ease: 'expo.inOut' }, .3);
+      return tl;
     });
+    // play a plate once it is well inside the track AND the track is on screen
+    const seen = new Set<number>();
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        const i = plates.indexOf(e.target as HTMLElement);
+        if (e.isIntersecting && !seen.has(i)) { seen.add(i); tls[i].play(); }
+      });
+    }, { root: track, threshold: .5 });
+    const vio = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) plates.forEach(p => io.observe(p)); else io.disconnect();
+    }, { threshold: .35 });
+    vio.observe(track);
+
+    // rail: cached geometry, updated on resize; scroll handler only writes
+    let max = 1, step = 1;
+    const measure = () => {
+      max = Math.max(1, track.scrollWidth - track.clientWidth);
+      step = plates[0]?.offsetWidth || 1;
+    };
+    measure();
+    const onScroll = () => {
+      const x = track.scrollLeft;
+      railBar.style.transform = `scaleX(${Math.min(1, x / max)})`;
+      const i = Math.round((x - (plates[0]?.offsetLeft ?? 0) + step * .5) / step);
+      railNum.textContent = i < 0 ? '—' : ROMAN[Math.min(plates.length - 1, i)];
+    };
+    track.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', measure);
+    onScroll();
+
+    return () => {
+      io.disconnect(); vio.disconnect();
+      track.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', measure);
+      tls.forEach(t => t.kill());
+      railBar.style.removeProperty('transform');
+      railNum.textContent = '—';
+    };
   });
 
   return () => mm.revert();

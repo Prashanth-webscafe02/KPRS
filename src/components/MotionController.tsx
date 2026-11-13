@@ -89,7 +89,7 @@ export default function MotionController() {
     cleanups.push(initRecord(q('.record'), opts));
     cleanups.push(initSectors(q('.sectors'), opts));
     cleanups.push(initEnquire(q('.enquire'), opts));
-    cleanups.push(initChrome(opts));
+    cleanups.push(initChrome());
 
     /* start the reveal once type has loaded and the anatomy scene has finished
        its one-off shader warm-up, so no compile stall can land mid-intro */

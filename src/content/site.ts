@@ -11,6 +11,7 @@
 //  - Which phone number is primary: all three published numbers are shown.
 //  - The test certificate is a specimen with illustrative values (labelled on the page).
 import type { DrawingName } from '@/three/drawings';
+import { company } from './company';
 
 export const sheets = [
   { no: '01', id: 'top', title: 'Reveal', content: 'The machine' },
@@ -23,6 +24,7 @@ export const sheets = [
 ] as const;
 
 export const hero = {
+  lede: 'Power, distribution, dry-type and furnace-duty transformers — designed, wound and routine-tested in Bangalore since 1992.',
   // Annotations describe the parts of the illustrative 3D model; no invented ratings.
   notes: [
     { anchor: 'bushing', letter: 'A', name: 'HV bushing', detail: 'Brings the winding out through the cover' },
@@ -47,7 +49,7 @@ export const winding = {
 };
 
 export const anatomy = {
-  kicker: '§ 03 — Section through a power transformer',
+  kicker: 'Section through a power transformer',
   steps: [
     { no: '03.1', title: 'Tank & cooling', body: 'A welded mild-steel tank, shot-blasted and epoxy-coated, carries the oil that insulates and cools. Detachable radiator banks shed the heat by natural convection, with fans for forced-air rating.', label: 'Tank wall, stiffened', anchor: 'tank' },
     { no: '03.2', title: 'Cover & bushings', body: 'The cover carries the bushings that bring the windings out through the tank, the conservator that lets the oil breathe, and the protection — Buchholz, pressure relief, winding temperature.', label: 'Cover assembly lifted', anchor: 'cover' },
@@ -63,24 +65,25 @@ export interface Plate {
   name: [string, string];
   body: string;
   spec: [string, string][];
+  href: string;
 }
 
 export const plates: Plate[] = [
   // distribution.php. CONFIRM upper rating: 2 500 kVA (spec list) vs 3 150 kVA (intro).
-  { num: 'I', drawing: 'distribution', name: ['Distribution', 'transformers'], body: 'For multi-storey buildings and industries. Off-load or on-load tap changers, to customer requirement.',
+  { num: 'I', drawing: 'distribution', href: '/products/distribution-transformers', name: ['Distribution', 'transformers'], body: 'For multi-storey buildings and industries. Off-load or on-load tap changers, to customer requirement.',
     spec: [['Rating', 'from 25 kVA'], ['Primary', '11 / 22 / 33 kV'], ['Secondary', '433 V'], ['Standards', 'IS 1180 · IS 2026']] },
   // power.php
-  { num: 'II', drawing: 'power', name: ['Power', 'transformers'], body: 'Substation units with on-load tap changers, built and tested in-house to 132 kV class.',
+  { num: 'II', drawing: 'power', href: '/products/power-transformers', name: ['Power', 'transformers'], body: 'Substation units with on-load tap changers, built and tested in-house to 132 kV class.',
     spec: [['Rating', '5 – 50 MVA'], ['Primary', '33 / 66 / 132 kV'], ['Secondary', '11 / 22 / 33 kV'], ['Tap change', 'On-load, 17 positions']] },
   // dry.php
-  { num: 'III', drawing: 'dry', name: ['Dry-type', 'transformers'], body: 'No oil, air cooled. For hotels, complexes and multi-storey buildings where the transformer lives indoors.',
+  { num: 'III', drawing: 'dry', href: '/products/dry-type-transformers', name: ['Dry-type', 'transformers'], body: 'No oil, air cooled. For hotels, complexes and multi-storey buildings where the transformer lives indoors.',
     spec: [['Rating', '63 – 2 000 kVA'], ['Voltage', '11 000 / 433 V'], ['Class', 'F / H insulation'], ['Standard', 'IS 11171']] },
   // furnace.php
-  { num: 'IV', drawing: 'furnace', name: ['Furnace', 'duty'], body: 'Built to the application, with customised ratings and off-load rotary tap switches.',
+  { num: 'IV', drawing: 'furnace', href: '/products/furnace-duty-transformers', name: ['Furnace', 'duty'], body: 'Built to the application, with customised ratings and off-load rotary tap switches.',
     spec: [['Rating', '63 – 2 500 kVA'], ['Cooling', 'Oil / forced oil'], ['Tap change', 'Off-load rotary'], ['Frequency', '50 Hz']] },
   // index: "Other product for application such as furnace, isolation, motor starting
   // are also manufactured to customer specification."
-  { num: 'V', drawing: 'special', name: ['Isolation &', 'motor starting'], body: 'Special-application transformers, manufactured to customer specification.',
+  { num: 'V', drawing: 'special', href: '/products#special', name: ['Isolation &', 'motor starting'], body: 'Special-application transformers, manufactured to customer specification.',
     spec: [['Application', 'Isolation'], ['Application', 'Motor starting'], ['Built', 'To specification']] },
 ];
 
@@ -100,11 +103,7 @@ export const sectors = [
 
 // contact.php. CONFIRM which number is primary; all three published numbers are listed.
 export const contact = {
-  email: 'sales@kprsindia.com',
-  phones: [
-    { label: '080 4207 7095', href: 'tel:+918042077095' },
-    { label: '+91 97411 58600', href: 'tel:+919741158600' },
-    { label: '+91 99015 99774', href: 'tel:+919901599774' },
-  ],
-  works: ['Plot No. 10, Bommasandra–Jigani Link Road', 'Bommasandra, Bangalore, Karnataka, India'],
+  email: company.email,
+  phones: company.phones,
+  works: [company.address.street, `${company.address.locality}, ${company.address.city}, ${company.address.region}, ${company.address.country}`],
 };

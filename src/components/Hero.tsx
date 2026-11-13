@@ -1,10 +1,11 @@
+import Link from 'next/link';
 import { hero } from '@/content/site';
 
-/** SHT 01 · Cinematic reveal. The WebGL canvas is created on the client
+/** 01 · Cinematic reveal. The WebGL canvas is created on the client
  *  (see MotionController) so a Strict Mode remount never reuses a lost context. */
 export default function Hero() {
   return (
-    <section className="hero" id="top" data-sheet="01" data-sheet-title="Reveal" data-tone="dark">
+    <section className="hero" id="top" data-tone="dark">
       <div className="hero__veil" aria-hidden="true"></div>
 
       <div className="hero__frame" aria-hidden="true">
@@ -21,12 +22,17 @@ export default function Hero() {
       </ul>
 
       <div className="hero__copy">
-        <p className="hero__eyebrow"><span>Power</span><span>·</span><span>Distribution</span><span>·</span><span>Special duty</span></p>
+        <p className="hero__eyebrow"><span>Power</span><span>Distribution</span><span>Dry-type</span><span>Furnace duty</span></p>
         <h1 className="hero__title">
           <span className="line"><span>Power, held</span></span>
           <span className="line"><span><em>in precise</em></span></span>
           <span className="line"><span>tension.</span></span>
         </h1>
+        <p className="hero__lede">{hero.lede}</p>
+        <p className="hero__actions">
+          <Link href="/products" className="btn btn--accent">Explore the range</Link>
+          <Link href="/contact" className="btn btn--ghost">Send an enquiry</Link>
+        </p>
       </div>
 
       <div className="hero__meta">

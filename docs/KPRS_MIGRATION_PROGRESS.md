@@ -383,3 +383,45 @@ The `// Ported from legacy-vite/…` comments in `src/` can stay as provenance.
 - tsc, eslint, `next build`.
 - Runtime suite 6/6 on production and on dev (Strict Mode).
 - A Strict-Mode race found during this work (a draw on a disposed renderer when KHR is unavailable) was fixed and re-verified over 6 repeated loads.
+
+## 13. Branding, inner pages and dedicated mobile UI (2026-11-13)
+
+Checkpoint before this work: commit `9628915` on `next-migration` (local, not pushed).
+
+### Branding
+- Logo: official PNGs from kprs.in (`templates/constructone/images/kiranlogo.png`, 833×64, and
+  `logo-2.png`, 120×72). No SVG exists on the site. Saved unaltered in `public/brand/` and
+  `src/assets/brand/`. The header shows the compact mark on a white nameplate so the artwork
+  reads on dark and light sections without modification.
+- Colours: KPRS blue `#014A86` (logo + site CSS) and orange `#EA4B1C` (logo + site CSS).
+  Button fill `#D2401A` and text-on-paper `#B8380F` are darker tones of the same orange for AA contrast.
+- Type: Manrope (display), Inter (body), IBM Plex Mono (technical annotation only). Archivo is
+  kept only for its width axis (anatomy step numerals, sector names animate along it).
+- Anatomy drawing grid replaced by soft daylight on the paper; other technical drawings kept.
+
+### Structure
+- Global `SiteHeader` (desktop nav + Products menu + CTA; phone full-screen menu with focus
+  trap, scroll lock incl. Lenis, Escape) and `SiteFooter` in the root layout. The homepage
+  title-block nav, sheet roll and drawing register were removed (replaced by the header).
+- Routes: `/about`, `/products`, `/products/[slug]` (4, static), `/manufacturing`,
+  `/infrastructure`, `/quality`, `/contact`, plus `sitemap.xml`, `robots.txt`, 404.
+  No `/clients` page: kprs.in lists client logos only, no names (decision: skip).
+- Content: `src/content/company.ts`, sourced from kprs.in; open questions marked CONFIRM there.
+- Inner-page motion: `PageMotion` (one GSAP context per page, reverted on route change) and
+  `lib/animations/tone.ts` (header tone from the section under the header line).
+- Contact form validates client-side and is labelled as a demo; nothing is sent. A valid
+  submission offers the same enquiry as a pre-filled email.
+
+### 3D
+- No change to geometry, materials, lighting, poses, timings or the render loops.
+- Phone hero only: a view offset shifts the image down 24 % of the frame so the headline sits
+  above the machine and the actions below it (`MOBILE_SHIFT` in heroScene.ts).
+- The intro timeline also fades in the new hero lede and buttons.
+
+### Phone layouts
+- Hero: headline top, machine centre, ratings strip + two CTAs bottom.
+- Anatomy: step card on a translucent panel at the bottom; all five stages kept.
+- Range: swipeable scroll-snap carousel (intro card + 5 plates + end card); each drawing plots
+  when swiped into view; rail shows plate number and progress.
+- Test record: rows reflow into two-line entries (no sideways scroll).
+- `main { overflow-x: clip }` stops the QA stamp's pre-animation scale widening the page.

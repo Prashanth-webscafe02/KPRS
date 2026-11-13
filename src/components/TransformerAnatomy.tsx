@@ -1,16 +1,16 @@
 import { anatomy } from '@/content/site';
 
-/** SHT 03 · Scroll-controlled anatomy. The canvas is inserted after the grid on the client. */
+/** 03 · Scroll-controlled anatomy. The canvas is inserted after the grid on the client. */
 export default function TransformerAnatomy() {
   return (
-    <section className="anatomy" id="anatomy" data-sheet="03" data-sheet-title="Anatomy" data-tone="paper">
+    <section className="anatomy" id="anatomy" data-tone="paper">
       <div className="anatomy__pin" data-anatomy-pin>
         <div className="anatomy__grid" aria-hidden="true"></div>
         <svg className="anatomy__leaders" data-anatomy-leaders aria-hidden="true"></svg>
 
         <header className="anatomy__head">
-          <p className="kicker">{anatomy.kicker}</p>
-          <h2 className="anatomy__title">Anatomy of<br /><em>a power transformer</em></h2>
+          <p className="kicker"><span>03</span>{anatomy.kicker}</p>
+          <h2 className="anatomy__title">Anatomy of <em>a power transformer</em></h2>
         </header>
 
         <ol className="anatomy__steps" data-anatomy-steps>

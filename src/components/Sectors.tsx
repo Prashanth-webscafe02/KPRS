@@ -1,11 +1,11 @@
 import { sectors } from '@/content/site';
 
-/** SHT 06 · Sectors. Names condense along the Archivo width axis (lib/animations/sectors.ts). */
+/** 06 · Sectors. Names condense along the Archivo width axis (lib/animations/sectors.ts). */
 export default function Sectors() {
   return (
-    <section className="sectors" id="sectors" data-sheet="06" data-sheet-title="Sectors" data-tone="dark">
+    <section className="sectors" id="sectors" data-tone="dark">
       <div className="sectors__head">
-        <p className="kicker">§ 06 — Where the load is</p>
+        <p className="kicker"><span>06</span>Where the load is</p>
         <p className="sectors__lede">Transformers sit at the point where generation becomes use. Ours sit at these.</p>
       </div>
       <ol className="sectors__list">

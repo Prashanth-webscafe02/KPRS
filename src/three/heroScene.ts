@@ -68,7 +68,16 @@ export function createHeroScene({ section, canvas, leaders: svg, reduced }: Hero
     exit: { pos: new THREE.Vector3(2.6, 5.4, 4.4), tgt: new THREE.Vector3(-.4, 3.0, 0) },
   });
   let P = poses();
-  const onResize = () => { P = poses(); widths = null; };
+  // Phones: the mobile hero sets the headline above the machine and the actions
+  // below it, so the image is shifted down within the frame (a view offset only:
+  // camera poses, lens and the rendered scene are unchanged).
+  const MOBILE_SHIFT = .24;
+  const frameFor = () => {
+    if (mobile()) camera.setViewOffset(size.w, size.h, 0, -size.h * MOBILE_SHIFT, size.w, size.h);
+    else if (camera.view) camera.clearViewOffset();
+  };
+  frameFor();
+  const onResize = () => { P = poses(); widths = null; frameFor(); };
   window.addEventListener('resize', onResize);
 
   const state = { intro: reduced ? 1 : 0, exit: 0, light: reduced ? 1 : 0 };
@@ -130,6 +139,7 @@ export function createHeroScene({ section, canvas, leaders: svg, reduced }: Hero
         .to('.crop', { opacity: 1, duration: .6, stagger: .08 }, .5)
         .to('.hero__title .line > span', { y: 0, duration: 1.5, stagger: .14, ease: 'expo.out' }, 2.4)
         .to('.hero__eyebrow', { opacity: 1, duration: .9 }, 2.9)
+        .to(['.hero__lede', '.hero__actions'], { opacity: 1, y: 0, duration: .9, stagger: .12 }, 3.1)
         .to('.hero__meta', { opacity: 1, duration: .9 }, 3.4)
         .add(() => countUp(), 3.4)
         .to(leaders.map(l => l.g), { opacity: 1, duration: .6, stagger: .18 }, 4.1)

@@ -1,12 +1,12 @@
 import { Fragment } from 'react';
 import { winding } from '@/content/site';
 
-/** SHT 02 · Winding / manifesto. Words are pre-split into spans here (the original
+/** 02 · Winding / manifesto. Words are pre-split into spans here (the original
  *  split innerHTML at runtime, which would mutate React-owned DOM). */
 export default function CopperWinding() {
   const words = winding.statement.trim().split(/\s+/);
   return (
-    <section className="winding" id="winding" data-sheet="02" data-sheet-title="Winding" data-tone="dark">
+    <section className="winding" id="winding" data-tone="dark">
       <div className="winding__coil" aria-hidden="true">
         <div className="winding__former">
           <div className="winding__turns" data-turns></div>
@@ -17,7 +17,7 @@ export default function CopperWinding() {
       </div>
 
       <div className="winding__text">
-        <p className="kicker">§ 02 — On method</p>
+        <p className="kicker"><span>02</span>On method</p>
         <p className="winding__statement" data-scrub-words>
           {words.map((w, i) => <Fragment key={i}>{i > 0 && ' '}<span className="w">{w}</span></Fragment>)}
         </p>

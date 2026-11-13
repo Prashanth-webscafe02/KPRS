@@ -2,7 +2,7 @@
 // navigation chrome, keyboard access and reduced motion.
 // Run against `npm run dev` (Strict Mode double-mount) and against `npm run start`.
 import { test, expect, type Page, type ConsoleMessage } from '@playwright/test';
-import { NEXT_URL, LEGACY_URL, layout, pump, scrollToY, wait } from './helpers';
+import { NEXT_URL, LEGACY_URL, layout, scrollToY, wait } from './helpers';
 
 function watchConsole(page: Page) {
   const problems: string[] = [];
@@ -69,25 +69,20 @@ test.describe('desktop 1440', () => {
   // Software WebGL (SwiftShader) stalls the main thread while both scenes compile,
   // so let the intro finish before scripted scrolling, as the parity spec does.
 
-  test('chrome: sheet roll, tone, gauge, at-top', async ({ page }) => {
+  test('chrome: header tone, scrolled state, gauge', async ({ page }) => {
     await page.goto(NEXT_URL, { waitUntil: 'load' });
     await wait(8000);
-    await expect(page.locator('body')).toHaveClass(/at-top/);
+    await expect(page.locator('.hdr')).not.toHaveAttribute('data-scrolled', /.*/);
     await expect(page.locator('body')).toHaveAttribute('data-tone', 'dark');
     const L = await layout(page);
     await scrollToY(page, L.anatomy + 10, 2500);
-    await expect(page.locator('[data-sheet-num]')).toHaveText('03');
-    await expect(page.locator('.tb__title')).toHaveText('Anatomy');
     await expect(page.locator('body')).toHaveAttribute('data-tone', 'paper');
-    await expect(page.locator('body')).not.toHaveClass(/at-top/);
+    await expect(page.locator('.hdr')).toHaveAttribute('data-scrolled', /.*/);
     await scrollToY(page, L.range + 10, 2500);
     await expect(page.locator('body')).toHaveAttribute('data-tone', 'graphite');
     await scrollToY(page, L.max, 2500);
     // Lenis lerps asymptotically, so the needle lands within a few thousandths of the end
     expect(Number(await page.locator('[data-gauge-read]').textContent())).toBeGreaterThanOrEqual(990);
-    // Note: SHT 07 is never reached at this viewport, in the original too: the footer's
-    // 'top 30px' start sits ~120px below the max scroll position. Pre-existing; not changed.
-    await expect(page.locator('[data-sheet-num]')).toHaveText('06');
   });
 
   test('motion: coil, turn counter, record stamp', async ({ page }) => {
@@ -105,22 +100,80 @@ test.describe('desktop 1440', () => {
     expect(Number(stamp)).toBe(1);
   });
 
-  test('keyboard: register opens, Escape closes, links navigate', async ({ page }) => {
+  test('keyboard: products menu opens, Escape closes, links route', async ({ page }) => {
     await page.goto(NEXT_URL, { waitUntil: 'load' });
     await wait(1000);
-    const btn = page.locator('[data-index-open]');
-    await btn.focus();
+    const caret = page.locator('.hdr__caret');
+    await caret.focus();
     await page.keyboard.press('Enter');
-    await expect(page.locator('#register')).toHaveClass(/is-open/);
-    await expect(btn).toHaveAttribute('aria-expanded', 'true');
+    await expect(caret).toHaveAttribute('aria-expanded', 'true');
+    await expect(page.locator('#hdr-products')).toBeVisible();
     await page.keyboard.press('Escape');
-    await expect(page.locator('#register')).not.toHaveClass(/is-open/);
-    await expect(btn).toHaveAttribute('aria-expanded', 'false');
-    await page.keyboard.press('Enter');
-    await page.locator('#register a[href="#record"]').click();
-    await expect(page.locator('#register')).not.toHaveClass(/is-open/);
-    await pump(page, 3000);
-    await expect(page.locator('[data-sheet-num]')).toHaveText('05');
+    await expect(caret).toHaveAttribute('aria-expanded', 'false');
+    await expect(caret).toBeFocused();
+    await caret.click();
+    await page.locator('#hdr-products a[href="/products/dry-type-transformers"]').click();
+    // generous: under SwiftShader the main thread stalls while both scenes compile
+    await expect(page).toHaveURL(/\/products\/dry-type-transformers$/, { timeout: 60_000 });
+    await expect(page.locator('h1')).toHaveText('Dry-type transformers');
+    await expect(page.locator('.hdr__drop > a')).toHaveAttribute('data-active', /.*/);
+  });
+
+  test('routes: leaving and returning home rebuilds both scenes cleanly', async ({ page }) => {
+    const problems = watchConsole(page);
+    await page.goto(NEXT_URL, { waitUntil: 'load' });
+    await wait(4000);
+    expect((await dom(page)).canvases).toBe(2);
+    await page.locator('.hdr__nav a[href="/manufacturing"]').click();
+    await expect(page.locator('h1')).toContainText('From core steel');
+    expect(await page.locator('canvas').count()).toBe(0);
+    await expect(page.locator('html')).not.toHaveClass(/lenis/);
+    await page.goBack();
+    await wait(4000);
+    expect((await dom(page)).canvases).toBe(2);
+    expect(problems, problems.join('\n')).toEqual([]);
+  });
+});
+
+test.describe('phone', () => {
+  test.use({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
+  test('menu: opens, traps focus, locks scroll, Escape closes; no sideways scroll', async ({ page }) => {
+    await page.goto(NEXT_URL + 'about', { waitUntil: 'load' });
+    await wait(1000);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(390);
+    const burger = page.locator('.hdr__burger');
+    await burger.click();
+    await expect(burger).toHaveAttribute('aria-expanded', 'true');
+    await expect(page.locator('#mobile-menu')).toBeVisible();
+    await expect(page.locator('html')).toHaveClass(/menu-open/);
+    await expect(page.locator('#mobile-menu a').first()).toBeFocused();
+    await page.locator('#mobile-menu .mnav__row button').click();
+    await expect(page.locator('#mnav-products')).toBeVisible();
+    await page.keyboard.press('Escape');
+    await expect(page.locator('#mobile-menu')).toBeHidden();
+    await expect(page.locator('html')).not.toHaveClass(/menu-open/);
+    await expect(burger).toBeFocused();
+    await burger.click();
+    await page.locator('#mobile-menu a[href="/quality"]').click();
+    await expect(page).toHaveURL(/\/quality$/);
+    await expect(page.locator('#mobile-menu')).toBeHidden();
+  });
+
+  test('contact form: validates, and says plainly that the demo sends nothing', async ({ page }) => {
+    await page.goto(NEXT_URL + 'contact?product=power-transformers', { waitUntil: 'load' });
+    await expect(page.locator('#f-product')).toHaveValue('power-transformers');
+    await page.locator('.fm button[type=submit]').click();
+    await expect(page.locator('#f-name')).toBeFocused();
+    await expect(page.locator('#f-name')).toHaveAttribute('aria-invalid', 'true');
+    await page.fill('#f-name', 'Test Engineer');
+    await page.fill('#f-email', 'not-an-email');
+    await page.fill('#f-message', 'A 10 MVA 66/11 kV unit, ONAN, outdoor.');
+    await page.locator('.fm button[type=submit]').click();
+    await expect(page.locator('#f-email-err')).toBeVisible();
+    await page.fill('#f-email', 'test@example.com');
+    await page.locator('.fm button[type=submit]').click();
+    await expect(page.locator('.fm-done')).toContainText('has not been sent');
+    await expect(page.locator('.fm-done a[href^="mailto:"]')).toBeVisible();
   });
 });
 

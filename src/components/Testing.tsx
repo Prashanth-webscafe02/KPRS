@@ -1,12 +1,12 @@
 import { record } from '@/content/site';
 
-/** SHT 05 · Test record. Rows, readings and the stamp are animated in lib/animations/record.ts. */
+/** 05 · Test record. Rows, readings and the stamp are animated in lib/animations/record.ts. */
 export default function Testing() {
   return (
-    <section className="record" id="record" data-sheet="05" data-sheet-title="Test record" data-tone="paper">
+    <section className="record" id="record" data-tone="paper">
       <div className="record__head">
-        <p className="kicker">§ 05 — Routine &amp; type tests</p>
-        <h2 className="record__title">Nothing leaves<br />the works <em>untested.</em></h2>
+        <p className="kicker"><span>05</span>Routine testing</p>
+        <h2 className="record__title">Nothing leaves the works <em>untested.</em></h2>
         <p className="record__lede">{record.lede}</p>
       </div>
 
