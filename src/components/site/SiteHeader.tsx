@@ -86,6 +86,9 @@ export default function SiteHeader() {
 
       <nav className="hdr__nav" aria-label="Primary">
         <ul>
+          <li>
+            <Link href="/" aria-current={path === '/' ? 'page' : undefined} data-active={path === '/' || undefined}>Home</Link>
+          </li>
           {nav.map(item => item.href === '/products' ? (
             <li key={item.href} className="hdr__drop" ref={dropWrap} data-open={drop || undefined}
               onMouseEnter={() => setDrop(true)} onMouseLeave={() => setDrop(false)} onBlur={onDropLeave}>
@@ -129,7 +132,7 @@ export default function SiteHeader() {
 
       <div className="mnav" id="mobile-menu" ref={panel} hidden={!menu} aria-label="Site menu" role="dialog" aria-modal="true">
         <ul className="mnav__list">
-          <li style={{ '--i': 0 } as React.CSSProperties}><Link href="/" aria-current={path === '/' ? 'page' : undefined}>Home</Link></li>
+          <li style={{ '--i': 0 } as React.CSSProperties}><Link href="/" aria-current={path === '/' ? 'page' : undefined} data-active={path === '/' || undefined}>Home</Link></li>
           {nav.map((item, n) => item.href === '/products' ? (
             <li key={item.href} style={{ '--i': n + 1 } as React.CSSProperties} className="mnav__group" data-open={mobProducts || undefined}>
               <div className="mnav__row">
