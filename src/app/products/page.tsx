@@ -43,9 +43,8 @@ export default function ProductsPage() {
 
       {products.map((p, i) => (
         <section key={p.slug} id={p.slug} className={`pr-exhibit${i % 2 ? ' pr-exhibit--flip' : ''}`} data-tone="paper" aria-labelledby={`${p.slug}-h`}>
-          <figure className="pr-exhibit__photo" data-reveal="image">
+          <figure className="pr-exhibit__photo product-cut" data-reveal="image">
             <Image src={p.photo.src} alt={p.photo.alt} placeholder="blur" sizes="(max-width: 860px) 100vw, 50vw" />
-            <span className="pr-exhibit__no" aria-hidden="true">{p.index}</span>
           </figure>
           <div className="pr-exhibit__body">
             <h2 id={`${p.slug}-h`} className="pr-exhibit__name" data-reveal>{p.name}</h2>

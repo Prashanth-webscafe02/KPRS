@@ -18,16 +18,22 @@
 //  - Client names: clients.php shows logos only, no names. No Clients page.
 //  - Primary telephone number: all three published numbers are listed.
 import type { StaticImageData } from 'next/image';
-import power from '@/assets/kprs/product-power.jpg';
-import distribution from '@/assets/kprs/product-distribution.jpg';
-import dry from '@/assets/kprs/product-dry.jpg';
-import furnace from '@/assets/kprs/product-furnace.jpg';
-import pCca from '@/assets/kprs/process-cca.jpg';
+// product photographs, studio white removed (originals and white-plate crops kept);
+// the white crops remain for link previews, where transparency is not safe
+import power from '@/assets/kprs/product-power-cut.png';
+import powerOg from '@/assets/kprs/product-power-plate.jpg';
+import distribution from '@/assets/kprs/product-distribution-cut.png';
+import distributionOg from '@/assets/kprs/product-distribution-plate.jpg';
+import dry from '@/assets/kprs/product-dry-cut.png';
+import dryOg from '@/assets/kprs/product-dry-plate.jpg';
+import furnace from '@/assets/kprs/product-furnace-cut.png';
+import furnaceOg from '@/assets/kprs/product-furnace-plate.jpg';
+import pCca from '@/assets/kprs/process-cca-plate.jpg';
 import pCcaHv from '@/assets/kprs/process-cca-hv.jpg';
 import pCcaLv from '@/assets/kprs/process-cca-lv.jpg';
 import pDrying from '@/assets/kprs/process-drying.jpg';
 import pFinal1 from '@/assets/kprs/process-final-1.jpg';
-import pFinal2 from '@/assets/kprs/process-final-2.jpg';
+import pFinal2 from '@/assets/kprs/process-final-2-trim.jpg';
 import pOven1 from '@/assets/kprs/process-oven-1.jpg';
 import pOven2 from '@/assets/kprs/process-oven-2.jpg';
 import pPaint from '@/assets/kprs/process-painting.jpg';
@@ -37,7 +43,8 @@ import pWinding from '@/assets/kprs/process-winding.jpg';
 import pWindings from '@/assets/kprs/process-windings.jpg';
 import aboutPhoto from '@/assets/kprs/about.jpg';
 
-export interface Photo { src: StaticImageData; alt: string }
+// studio: process photo shot on studio white; shown whole on a studio-white stage
+export interface Photo { src: StaticImageData; alt: string; studio?: boolean; og?: StaticImageData }
 
 export const company = {
   name: 'Kiran Power Rectification Services Pvt. Ltd.',
@@ -125,7 +132,23 @@ export interface Product {
   engineering: { title: string; body: string }[];
   accessories?: { standard: string[]; optional: string[] };
   note?: string;
+  /** Illustrative 3D model (see components/site/ProductModel.tsx). Only for a
+   *  family the shared procedural model can stand for; every part note is taken
+   *  from this product's published fittings or the process page. */
+  model?: { parts: ModelPart[] };
 }
+
+export type ModelPartId = 'conservator' | 'hv' | 'lv' | 'radiators' | 'tapchanger' | 'tank';
+export interface ModelPart { id: ModelPartId; name: string; body: string }
+
+const POWER_MODEL_PARTS: ModelPart[] = [
+  { id: 'conservator', name: 'Oil conservator', body: 'Takes up the expansion of the oil. Standard, with a drain plug and a dehydrating silica-gel breather.' },
+  { id: 'hv', name: 'HV terminals', body: 'Outdoor bushings as standard; an HV cable box is optional.' },
+  { id: 'lv', name: 'LV terminals', body: 'Outdoor bushings as standard; an LV cable box with neutral bushing, or bus duct, is optional.' },
+  { id: 'radiators', name: 'Cooling radiators', body: 'Standard fittings on every KPRS power transformer.' },
+  { id: 'tapchanger', name: 'Tap changer', body: 'On-load, 17 positions, available with automatic voltage regulation and an RTCC panel.' },
+  { id: 'tank', name: 'Tank', body: 'Mild steel, leak-proof and built to withstand pressure. Finished in shade 631 admiralty grey to IS 5, or the colour ordered.' },
+];
 
 const POWER_STANDARD = [
   'Rating and diagram plate', 'Earthing terminals (2)', 'Lifting lugs (2)', 'Oil level indicator',
@@ -147,7 +170,7 @@ export const products: Product[] = [
     name: 'Power transformers',
     short: 'Power',
     index: '01',
-    photo: { src: power, alt: 'KPRS power transformer with conservator, radiators and on-load tap changer control panel' },
+    photo: { src: power, og: powerOg, alt: 'KPRS power transformer with conservator, radiators and on-load tap changer control panel' },
     lede: 'The link between the companies that generate power and the ones that distribute it.',
     body: [
       'Transmission joins generation to distribution, and power transformers make that joint. KPRS supplies transmission companies with power transformers of the 132 kV class.',
@@ -170,13 +193,14 @@ export const products: Product[] = [
       { title: 'Protection', body: 'Buchholz relay, oil-surge relay and winding and oil temperature indicators with trip and alarm contacts can be fitted.' },
     ],
     accessories: { standard: POWER_STANDARD, optional: POWER_OPTIONAL },
+    model: { parts: POWER_MODEL_PARTS },
   },
   {
     slug: 'distribution-transformers',
     name: 'Distribution transformers',
     short: 'Distribution',
     index: '02',
-    photo: { src: distribution, alt: 'KPRS oil-filled distribution transformer with conservator and radiators' },
+    photo: { src: distribution, og: distributionOg, alt: 'KPRS oil-filled distribution transformer with conservator and radiators' },
     lede: 'The last step down: power delivered to industries, buildings and consumers.',
     body: [
       'Distribution transformers carry power to consumers through a ring main or similar network. KPRS builds them in oil-filled construction.',
@@ -208,7 +232,7 @@ export const products: Product[] = [
     name: 'Dry-type transformers',
     short: 'Dry-type',
     index: '03',
-    photo: { src: dry, alt: 'KPRS dry-type transformer in a ventilated enclosure' },
+    photo: { src: dry, og: dryOg, alt: 'KPRS dry-type transformer in a ventilated enclosure' },
     lede: 'No oil. Low maintenance. Made to live indoors, close to the load.',
     body: [
       'KPRS builds class F and class H dry-type transformers conforming to IS 11171. They are housed in a ventilated enclosure of a suitable IP class, with HV taps controlled by an off-circuit link or an on-load tap changer.',
@@ -238,7 +262,7 @@ export const products: Product[] = [
     name: 'Furnace-duty transformers',
     short: 'Furnace duty',
     index: '04',
-    photo: { src: furnace, alt: 'KPRS furnace-duty transformer with conservator and rotary off-load tap switch' },
+    photo: { src: furnace, og: furnaceOg, alt: 'KPRS furnace-duty transformer with conservator and rotary off-load tap switch' },
     lede: 'High currents for melting metal, and a design that takes repeated short circuits.',
     body: [
       'Furnace transformers develop the high currents that melt metal held in a crucible. They see heavy short circuits, intermittently, as molten metal is charged and discharged.',
@@ -311,7 +335,7 @@ export const process: ProcessStep[] = [
       'Sudden loading and unloading produce buckling and bursting forces in the windings. Radial and axial supports, and firm axial clamping, keep those forces from causing damage.',
     ],
     photos: [
-      { src: pCca, alt: 'Core–coil assembly with tap leads and on-load tap changer' },
+      { src: pCca, alt: 'Core–coil assembly with tap leads and on-load tap changer', studio: true },
       { src: pCcaHv, alt: 'Core–coil assembly, HV side, with insulated leads' },
       { src: pCcaLv, alt: 'Core–coil assembly, LV side' },
     ],

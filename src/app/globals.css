@@ -35,6 +35,25 @@
   --copper-lo: #7d4220;
   --signal: #b8380f;
 
+  /* surfaces. Every section takes one of these; data-tone (dark | graphite |
+     paper) stays the contract the header reads, the surface is the colour.
+       primary dark    chapter openers, the machine itself (3D, specifications)
+       secondary dark  the catalogue: product index, the range
+       light neutral   the reading surface of every inner page
+       warm neutral    reference and closing bands, the footer
+       brand accent    the one closing call to action on a product page
+       stage           studio white, behind the one process photograph that is
+                       still shown whole on its studio background (core–coil)
+     Rhythm: a run of same-surface sections is divided by hairlines, never by
+     alternating colour; a surface change marks a change of chapter. */
+  --bg-dark: var(--ink);
+  --bg-dark-2: var(--graphite);
+  --bg-light: var(--paper-hi);
+  --bg-warm: var(--paper);
+  --bg-brand: var(--blue);
+  --bg-stage: #fefefe;
+  --stage-rule: rgba(13, 12, 10, .09);
+
   --display: "Manrope", "Helvetica Neue", Arial, sans-serif;
   --sans: "Inter", "Helvetica Neue", Arial, sans-serif;
   --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
@@ -168,11 +187,11 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 /* the logo sits on its own white nameplate, so the original artwork reads
    unaltered on every surface */
 .hdr__logo {
-  display: block; background: #fff; border-radius: 8px; padding: 6px 10px;
+  display: block; background: #fff; border-radius: 7px; padding: 4px 8px;
   box-shadow: 0 0 0 1px rgba(13, 12, 10, .06);
   line-height: 0;
 }
-.hdr__logo img { height: 40px; width: 67px; }
+.hdr__logo img { height: 44px; width: auto; aspect-ratio: 173 / 64; }
 
 .hdr__nav > ul { display: flex; align-items: center; justify-content: center; gap: clamp(18px, 2.4vw, 40px); }
 .hdr__nav a {
@@ -233,7 +252,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 
 /* Editorial footer: one rule above four columns, sentence-case headings in the
    body face, quiet supporting text. No monospace, no tracking, no capitals. */
-.ftr { background: var(--paper); color: var(--ink); padding: 80px var(--gutter) 32px; }
+.ftr { background: var(--bg-warm);color: var(--ink); padding: 80px var(--gutter) 32px; }
 .ftr__brand { display: grid; grid-template-columns: minmax(0, 640px) 1fr; align-items: end; gap: 32px; padding-bottom: 48px; }
 .ftr__logo { width: 100%; height: auto; mix-blend-mode: multiply; }
 .ftr__line {
@@ -695,8 +714,8 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   :root { --tb-h: 64px; }
   .hdr { grid-template-columns: auto 1fr auto; gap: 12px; }
   .hdr__nav, .hdr__cta { display: none; }
-  .hdr__logo { padding: 5px 8px; border-radius: 7px; }
-  .hdr__logo img { height: 34px; width: 57px; }
+  .hdr__logo { padding: 3px 6px; border-radius: 6px; }
+  .hdr__logo img { height: 38px; }
   .hdr__burger {
     grid-column: 3; display: grid; align-content: center; justify-items: end; gap: 6px;
     width: 48px; height: 48px; margin-right: -8px; padding: 0 12px;

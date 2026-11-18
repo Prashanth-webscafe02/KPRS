@@ -9,7 +9,8 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { company, nav, products } from '@/content/company';
 import { getLenis } from '@/lib/scrolling/lenis';
-import logo from '@/assets/brand/kprs-logo-footer.png';
+// the KPRS mark, cut at its own edges from the official logo banner (no padding)
+import logo from '@/assets/brand/kprs-logo-mark.png';
 
 const isActive = (path: string, href: string) => path === href || path.startsWith(href + '/');
 
@@ -81,7 +82,7 @@ export default function SiteHeader() {
   return (
     <header className="hdr" data-scrolled={scrolled || undefined} data-menu={menu || undefined}>
       <Link href="/" className="hdr__logo" aria-label="KPRS Transformers — home">
-        <Image src={logo} alt="" priority width={60} height={36} />
+        <Image src={logo} alt="" priority width={119} height={44} />
       </Link>
 
       <nav className="hdr__nav" aria-label="Primary">

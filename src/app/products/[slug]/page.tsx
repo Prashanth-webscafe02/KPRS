@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import PageMotion from '@/components/site/PageMotion';
+import ProductModel from '@/components/site/ProductModel';
 import { productBySlug, products } from '@/content/company';
 
 export const dynamicParams = false;
@@ -19,7 +20,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     title: p.name,
     description: `${p.name} by KPRS, Bangalore. ${p.lede} ${p.headline.map(([k, v]) => `${k}: ${v}`).join('; ')}.`,
     alternates: { canonical: `/products/${p.slug}` },
-    openGraph: { images: [{ url: p.photo.src.src, width: p.photo.src.width, height: p.photo.src.height, alt: p.photo.alt }] },
+    openGraph: { images: [(og => ({ url: og.src, width: og.width, height: og.height, alt: p.photo.alt }))(p.photo.og ?? p.photo.src)] },
   };
 }
 
@@ -55,7 +56,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               <a href="#specifications" className="link-arrow">Specifications <span aria-hidden="true">↓</span></a>
             </div>
           </div>
-          <figure className="pd-hero__photo" data-reveal="image">
+          <figure className="pd-hero__photo product-cut" data-reveal="image">
             <Image src={p.photo.src} alt={p.photo.alt} placeholder="blur" priority sizes="(max-width: 860px) 100vw, 46vw" />
           </figure>
         </div>
@@ -73,6 +74,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           <ul>{p.applications.map(a => <li key={a}>{a}</li>)}</ul>
         </aside>
       </section>
+
+      {p.model && <ProductModel name={p.name} parts={p.model.parts} photo={p.photo} />}
 
       <section className="pd-specs" id="specifications" data-tone="dark" aria-labelledby="spec-h">
         <div className="pd-specs__head">
@@ -114,7 +117,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           {related.map(r => (
             <li key={r.slug}>
               <Link href={`/products/${r.slug}`}>
-                <span className="pd-related__img"><Image src={r.photo.src} alt="" placeholder="blur" sizes="(max-width: 860px) 70vw, 28vw" /></span>
+                <span className="pd-related__img product-cut"><Image src={r.photo.src} alt="" placeholder="blur" sizes="(max-width: 860px) 70vw, 28vw" /></span>
                 <span className="pd-related__no">{r.index}</span>
                 <span className="pd-related__name">{r.name}</span>
                 <span className="pd-related__spec">{r.headline[0][1]}</span>
