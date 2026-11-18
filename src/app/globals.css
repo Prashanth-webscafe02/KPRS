@@ -184,14 +184,17 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 }
 .hdr[data-scrolled]::after { opacity: 1; }
 
-/* the logo sits on its own white nameplate, so the original artwork reads
-   unaltered on every surface */
-.hdr__logo {
-  display: block; background: #fff; border-radius: 7px; padding: 4px 8px;
-  box-shadow: 0 0 0 1px rgba(13, 12, 10, .06);
-  line-height: 0;
-}
-.hdr__logo img { height: 44px; width: auto; aspect-ratio: 173 / 64; }
+/* the logo is a transparent cut of the official artwork and sits directly on the
+   header. Two stacked variants cross-fade with the header tone: the original on
+   cream, and one with white KPRS lettering on the dark header (where KPRS blue
+   would vanish). The dark one is absolutely placed, so the box never changes. */
+.hdr__logo { position: relative; display: block; line-height: 0; }
+.hdr__logo img { height: 40px; width: auto; aspect-ratio: 173 / 51; transition: opacity .45s; }
+.hdr__logo .hdr__logo-dark { position: absolute; left: 0; top: 0; opacity: 0; }
+body[data-tone="dark"] .hdr__logo-dark,
+body[data-tone="graphite"] .hdr__logo-dark { opacity: 1; }
+body[data-tone="dark"] .hdr__logo-light,
+body[data-tone="graphite"] .hdr__logo-light { opacity: 0; }
 
 .hdr__nav > ul { display: flex; align-items: center; justify-content: center; gap: clamp(18px, 2.4vw, 40px); }
 .hdr__nav a {
@@ -714,8 +717,9 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   :root { --tb-h: 64px; }
   .hdr { grid-template-columns: auto 1fr auto; gap: 12px; }
   .hdr__nav, .hdr__cta { display: none; }
-  .hdr__logo { padding: 3px 6px; border-radius: 6px; }
-  .hdr__logo img { height: 38px; }
+  .hdr[data-menu] .hdr__logo-dark { opacity: 1; }
+  .hdr[data-menu] .hdr__logo-light { opacity: 0; }
+  .hdr__logo img { height: 34px; }
   .hdr__burger {
     grid-column: 3; display: grid; align-content: center; justify-items: end; gap: 6px;
     width: 48px; height: 48px; margin-right: -8px; padding: 0 12px;
